@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 
 const connectDB = async () => {
-    const mongoUri = process.env.MONGO_URI || process.env.MONGODB_URI || process.env.DATABASE_URL;
-
+    const mongoUri = process.env.mongodb_uri;
     if (!mongoUri || typeof mongoUri !== 'string') {
         console.error('MongoDB connection string is missing. Set MONGO_URI, MONGODB_URI, or DATABASE_URL in your .env file.');
         process.exit(1);
