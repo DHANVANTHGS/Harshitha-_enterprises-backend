@@ -34,7 +34,7 @@ app.use(express.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 
 
-const allowedOrigins = process.env.Allowed_origins ;
+const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(','): [];
 console.log(allowedOrigins);
 
 app.use(require('cors')({
