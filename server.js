@@ -8,7 +8,6 @@ const cart = require('./router/cart');
 const connectdb = require('./config');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
-const cors = require('cors');
 const connectDB = require('./config');
 
 const app = express();
@@ -35,7 +34,12 @@ app.use(bodyparser.urlencoded({ extended: true }));
 
 
 // const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(','): [];
-const allowedOrigins = ["https://harshitha-enterprises.vercel.app","http://localhost:5173","https://harshithaenterpries.com/","https://www.harshithaenterpries.com/"];
+const allowedOrigins = [
+    "https://harshitha-enterprises.vercel.app",
+    "http://localhost:5173",
+    "https://harshithaenterpries.com/",
+    "https://www.harshithaenterpries.com/"
+];
 //  console.log(allowedOrigins);
 //  console.log(typeof allowedOrigins);
 
