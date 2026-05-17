@@ -35,9 +35,22 @@ app.use(bodyparser.urlencoded({ extended: true }));
 
 
 const allowedOrigins = process.env.Allowed_origins ;
+console.log(allowedOrigins);
 
 app.use(require('cors')({
-    origin: allowedOrigins,
+   origin: function(origin, callback) {
+        console.log("Incoming Origin:", origin);
+        if (!origin) {
+            return callback(null, true);
+        }
+
+        if (allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            console.log("Blocked by CORS:", origin);
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With', 'Accept'], 
 }
