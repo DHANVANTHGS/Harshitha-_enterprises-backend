@@ -37,8 +37,8 @@ app.use(bodyparser.urlencoded({ extended: true }));
 const allowedOrigins = [
     "https://harshitha-enterprises.vercel.app",
     "http://localhost:5173",
-    "https://harshithaenterpries.com/",
-    "https://www.harshithaenterpries.com/"
+    "https://harshithaenterpries.com",
+    "https://www.harshithaenterpries.com"
 ];
 //  console.log(allowedOrigins);
 //  console.log(typeof allowedOrigins);
