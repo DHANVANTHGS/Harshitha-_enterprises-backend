@@ -34,23 +34,14 @@ app.use(express.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 
 
-const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(','): [];
-console.log(allowedOrigins);
+// const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(','): [];
+const allowedOrigins = ["https://harshitha-enterprises.vercel.app","http://localhost:5173","https://harshithaenterpries.com/","https://www.harshithaenterpries.com/"];
+//  console.log(allowedOrigins);
+//  console.log(typeof allowedOrigins);
+
 
 app.use(require('cors')({
-   origin: function(origin, callback) {
-        console.log("Incoming Origin:", origin);
-        if (!origin) {
-            return callback(null, true);
-        }
-
-        if (allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            console.log("Blocked by CORS:", origin);
-            callback(new Error("Not allowed by CORS"));
-        }
-    },
+    origin: allowedOrigins,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With', 'Accept'], 
 }
