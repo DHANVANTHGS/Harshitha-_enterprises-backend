@@ -7,9 +7,9 @@ const payment = new mongoose.Schema({
         unique: true
     },
     order_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'order',
-        required: true
+        type: String,
+        required: true,
+        unique: true
     },
     cf_order_id: {
         type: String,
