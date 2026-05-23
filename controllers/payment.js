@@ -1,7 +1,7 @@
 const expressAsyncHandler = require('express-async-handler');
 const payment_model = require('../models/payment');
 const crypto = require('crypto');
-const fetch = require('node-fetch');
+const fetch = globalThis.fetch || require('node-fetch').default || require('node-fetch');
 
 const CASHFREE_BASE_URL =
     process.env.CASHFREE_ENV === 'production'
