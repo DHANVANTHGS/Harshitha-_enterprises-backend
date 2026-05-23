@@ -76,6 +76,13 @@ app.get('/health',(req,res)=>{
     res.status(200).send({status: 'ok',message : "Backend is running"});
 });
 
+app.use('/api/payment', require('./router/payment'));
+
+app.use((err, req, res, next) => {
+    console.error('Error:', err);
+    res.status(500).json({ message: 'Internal Server Error' });
+});
+
 const server = app.listen(port, () => {
     console.log(`server is running on http://localhost:${port}`)
 });
