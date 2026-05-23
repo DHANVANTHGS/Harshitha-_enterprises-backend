@@ -1,4 +1,4 @@
-const ROuter = require('express').Router();
+const Router = require('express').Router();
 const {create_payment,verify_payment} = require('../controllers/payment');
 const {authmiddleware} = require('../middleware/authmiddleware');
 

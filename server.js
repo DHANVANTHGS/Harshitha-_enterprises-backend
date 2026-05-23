@@ -7,6 +7,7 @@ const order = require('./router/order');
 const cart = require('./router/cart');
 const connectdb = require('./config');
 const helmet = require('helmet');
+const payment = require('./router/payment');
 const rateLimit = require('express-rate-limit');
 const connectDB = require('./config');
 
@@ -76,7 +77,7 @@ app.get('/health',(req,res)=>{
     res.status(200).send({status: 'ok',message : "Backend is running"});
 });
 
-app.use('/api/payment', require('./router/payment'));
+app.use('/api/payment',payment);
 
 app.use((err, req, res, next) => {
     console.error('Error:', err);
