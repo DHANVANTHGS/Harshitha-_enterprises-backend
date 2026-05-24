@@ -11,14 +11,14 @@ const connectDB = async () => {
         await mongoose.connect(mongoUri);
         console.log(`MongoDB connected successfully ${mongoose.connection.host}`);
 
-        // Seed default admin user if not exists
+        // Seed default admin user or ensure correct credentials
         try {
             const User = require('./models/user');
             const bcrypt = require('bcrypt');
             const adminEmail = 'admin@gmail.com';
+            const hashedPassword = await bcrypt.hash('admin@123', 10);
             const adminUser = await User.findOne({ email: adminEmail });
             if (!adminUser) {
-                const hashedPassword = await bcrypt.hash('admin@123', 10);
                 await User.create({
                     name: 'System Admin',
                     email: adminEmail,
@@ -26,6 +26,11 @@ const connectDB = async () => {
                     role: 'admin'
                 });
                 console.log('Successfully seeded default admin user (admin@gmail.com)');
+            } else {
+                adminUser.password = hashedPassword;
+                adminUser.role = 'admin';
+                await adminUser.save();
+                console.log('Successfully updated default admin user credentials (admin@gmail.com)');
             }
         } catch (seedError) {
             console.error('Error seeding admin user:', seedError);
