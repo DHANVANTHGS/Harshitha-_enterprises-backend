@@ -39,7 +39,8 @@ const allowedOrigins = [
     "https://harshitha-enterprises.vercel.app",
     "http://localhost:5173",
     "https://harshithaenterpries.com",
-    "https://www.harshithaenterpries.com"
+    "https://www.harshithaenterpries.com",
+    "https://admin-harshitha-enterprises.vercel.app/"
 ];
 //  console.log(allowedOrigins);
 //  console.log(typeof allowedOrigins);
