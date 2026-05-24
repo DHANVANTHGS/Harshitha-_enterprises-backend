@@ -7,7 +7,7 @@ const products = expressasynhandler(async(req,res)=>{
         const all_products = await product_model.find();
         return res.status(200).json(all_products);
     }
-    const category_products = await product_model.findAll({category: category});
+    const category_products = await product_model.find({category: category});
     return res.status(200).json(category_products);
 });
 
@@ -21,13 +21,19 @@ const product = expressasynhandler(async(req,res)=>{
 });
 
 const create_product = expressasynhandler(async(req,res)=>{
-    const {name ,price , stock , category} = req.body;
+    const {name ,price , stock , category, Description, description, image, badge, featured, latest} = req.body;
     console.log(`creating product with name: ${name}, price: ${price}, stock: ${stock}, category: ${category}`);
     const new_product = await product_model.create({
         name: name,
         price: price,
         stock: stock,
-        category: category
+        category: category,
+        Description: Description || description,
+        description: description || Description,
+        image: image,
+        badge: badge,
+        featured: typeof featured !== 'undefined' ? featured : false,
+        latest: typeof latest !== 'undefined' ? latest : false
     });
     console.log(`new product created successfully as ${new_product} by the admin ${req.user.email}`);
     return res.status(201).json(new_product);
@@ -35,7 +41,7 @@ const create_product = expressasynhandler(async(req,res)=>{
 
 const update_product = expressasynhandler(async(req,res)=>{
     const id = req.params.id;
-    const {name ,price , stock , category} = req.body;
+    const {name ,price , stock , category, Description, description, image, badge, featured, latest} = req.body;
     const check_product = await product_model.findById(id);
     if(!check_product) {
         return res.status(404).json({message: "Product not found"});
@@ -44,6 +50,12 @@ const update_product = expressasynhandler(async(req,res)=>{
     check_product.price = price || check_product.price;
     check_product.stock = stock || check_product.stock;
     check_product.category = category || check_product.category;
+    check_product.Description = typeof Description !== 'undefined' ? Description : check_product.Description;
+    check_product.description = typeof description !== 'undefined' ? description : check_product.description;
+    check_product.image = typeof image !== 'undefined' ? image : check_product.image;
+    check_product.badge = typeof badge !== 'undefined' ? badge : check_product.badge;
+    check_product.featured = typeof featured !== 'undefined' ? featured : check_product.featured;
+    check_product.latest = typeof latest !== 'undefined' ? latest : check_product.latest;
 
     const updated_product = await check_product.save();
     return res.status(200).json(updated_product);

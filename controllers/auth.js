@@ -17,7 +17,7 @@ const register = expressasynhandler(async(req,res)=>{
         email: email,
         password: hashed_pass
     });
-    const token = jwt.sign({id: newuser._id}, process.env.JWT_SECRET, {expiresIn: '1d'});
+    const token = jwt.sign({id: newuser._id, role: newuser.role}, process.env.JWT_SECRET, {expiresIn: '1d'});
     console.log(`new user created successfully as ${newuser}`);
     res.status(201).json({
         message: 'user created succesfully',
@@ -42,7 +42,7 @@ const login = expressasynhandler(async(req,res)=>{
         console.log("invalid password!");
         return res.status(400).json({message: "Invalid password"});
     }
-    const token = jwt.sign({id:check_user._id}, process.env.JWT_SECRET, {expiresIn: '1d'});
+    const token = jwt.sign({id:check_user._id, role:check_user.role}, process.env.JWT_SECRET, {expiresIn: '1d'});
     console.log(`user logged in successfully as ${check_user}`);
     return res.status(200).json({
         message: 'user logged in successfully',

@@ -20,6 +20,23 @@ const product = new moongoose.Schema({
     Description :{
         type : String,
     },
+    description :{
+        type : String,
+    },
+    image :{
+        type : String,
+    },
+    badge :{
+        type : String,
+    },
+    featured :{
+        type : Boolean,
+        default : false
+    },
+    latest :{
+        type : Boolean,
+        default : false
+    },
     Reviews : [
         {
             user : {
