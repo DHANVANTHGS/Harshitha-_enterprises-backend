@@ -38,20 +38,39 @@ app.use(bodyparser.urlencoded({ extended: true }));
 const allowedOrigins = [
     "https://harshitha-enterprises.vercel.app",
     "http://localhost:5173",
+    "http://localhost:3000",
     "https://harshithaenterpries.com",
     "https://www.harshithaenterpries.com",
-    "https://admin-harshitha-enterprises.vercel.app/"
+    "https://admin-harshitha-enterprises.vercel.app"
 ];
-//  console.log(allowedOrigins);
-//  console.log(typeof allowedOrigins);
-
 
 app.use(require('cors')({
-    origin: allowedOrigins,
+    origin: function (origin, callback) {
+        if (!origin) return callback(null, true);
+        
+        const sanitizedOrigin = origin.replace(/\/$/, '');
+        
+        const isAllowed = allowedOrigins.some(allowed => allowed.replace(/\/$/, '') === sanitizedOrigin);
+        if (isAllowed) {
+            return callback(null, true);
+        }
+        
+        // Fallback: allow localhost, vercel.app and harshithaenterpries.com subdomains
+        if (
+            sanitizedOrigin.startsWith('http://localhost:') || 
+            sanitizedOrigin.startsWith('https://localhost:') ||
+            /https?:\/\/([a-z0-9-]+\.)?harshithaenterpries\.com$/i.test(sanitizedOrigin) ||
+            /https?:\/\/([a-z0-9-]+\.)?vercel\.app$/i.test(sanitizedOrigin)
+        ) {
+            return callback(null, true);
+        }
+        
+        return callback(new Error('Not allowed by CORS'));
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With', 'Accept'], 
-}
-));
+    allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With', 'Accept'],
+    credentials: true
+}));
 
 connectdb();
 
