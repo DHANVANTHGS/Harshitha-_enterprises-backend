@@ -8,6 +8,7 @@ const cart = require('./router/cart');
 const connectdb = require('./config');
 const helmet = require('helmet');
 const payment = require('./router/payment');
+const payout = require('./router/payout');
 const rateLimit = require('express-rate-limit');
 const connectDB = require('./config');
 
@@ -98,6 +99,7 @@ app.get('/health',(req,res)=>{
 });
 
 app.use('/api/payment',payment);
+app.use('/api/payout', payout);
 
 app.use((err, req, res, next) => {
     console.error('Error:', err);
